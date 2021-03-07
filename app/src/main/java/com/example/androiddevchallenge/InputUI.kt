@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge
 
 import androidx.compose.animation.AnimatedVisibility
@@ -38,7 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.ui.theme.almostBlack
 import com.example.androiddevchallenge.ui.theme.teal
-import java.util.*
+import java.util.Locale
 
 @ExperimentalAnimationApi
 @Composable
@@ -50,19 +65,21 @@ fun InputTime(viewModel: MainViewModel) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(almostBlack)) {
+            .background(almostBlack)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .height(120.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center) {
+            horizontalArrangement = Arrangement.Center
+        ) {
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     IncrementButton(onClick = { viewModel.incrementMinutes() })
-                    NumeralUnit("m", 0f)//just a placeholder for aligning button wrt digit only
+                    NumeralUnit("m", 0f) // just a placeholder for aligning button wrt digit only
                 }
 
                 Spacer(Modifier.height(16.dp))
@@ -84,7 +101,7 @@ fun InputTime(viewModel: MainViewModel) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     IncrementButton(onClick = { viewModel.incrementSeconds() })
-                    NumeralUnit("s", 0f) //just a placeholder for aligning button wrt. digit only
+                    NumeralUnit("s", 0f) // just a placeholder for aligning button wrt. digit only
                 }
 
                 Spacer(Modifier.height(16.dp))
@@ -102,11 +119,11 @@ fun InputTime(viewModel: MainViewModel) {
         AnimatedVisibility(
             visible = (inputMinutes.value != "00" || inputSeconds.value != "00"),
             enter = slideInVertically(
-                initialOffsetY = { fullHeight -> fullHeight  },
+                initialOffsetY = { fullHeight -> fullHeight },
                 animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
             ),
             exit = slideOutVertically(
-                targetOffsetY = { fullHeight -> fullHeight  },
+                targetOffsetY = { fullHeight -> fullHeight },
                 animationSpec = tween(durationMillis = 250, easing = FastOutLinearInEasing)
             )
         ) {
@@ -146,7 +163,7 @@ fun NumeralUnit(text: String, alpha: Float = 1f) {
 }
 
 @Composable
-fun IncrementButton(onClick:() -> Unit) {
+fun IncrementButton(onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         shape = RoundedCornerShape(50),
@@ -168,7 +185,7 @@ fun IncrementButton(onClick:() -> Unit) {
 }
 
 @Composable
-fun DecrementButton(onClick:() -> Unit) {
+fun DecrementButton(onClick: () -> Unit) {
     Button(
         onClick = { onClick() },
         shape = RoundedCornerShape(50),
@@ -190,7 +207,7 @@ fun DecrementButton(onClick:() -> Unit) {
 }
 
 @Composable
-fun StartButton(onStart:() -> Unit){
+fun StartButton(onStart: () -> Unit) {
     Button(
         onClick = { onStart() },
         shape = RoundedCornerShape(50),

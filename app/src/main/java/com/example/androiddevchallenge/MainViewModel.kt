@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge
 
 import android.os.CountDownTimer
@@ -6,7 +21,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
     /**
      * Denotes whether timer is running, also the source of navigation
@@ -46,28 +61,28 @@ class MainViewModel: ViewModel() {
      * methods for setting the value for required duration of timer
      */
     fun incrementMinutes() {
-        if(minutesCount<60) { //to prevent illegal minute values
+        if (minutesCount <60) { // to prevent illegal minute values
             minutesCount++
             _timerMinutes.value = minutesCount.toProperFormat()
         }
     }
 
     fun incrementSeconds() {
-        if(secondsCount<60) { //to prevent illegal second values
+        if (secondsCount <60) { // to prevent illegal second values
             secondsCount++
             _timerSeconds.value = secondsCount.toProperFormat()
         }
     }
 
     fun decrementMinutes() {
-        if(minutesCount>0) {
+        if (minutesCount> 0) {
             minutesCount--
             _timerMinutes.value = minutesCount.toProperFormat()
         }
     }
 
     fun decrementSeconds() {
-        if(secondsCount>0) {
+        if (secondsCount> 0) {
             secondsCount--
             _timerSeconds.value = secondsCount.toProperFormat()
         }
@@ -75,12 +90,12 @@ class MainViewModel: ViewModel() {
 
     fun startTimer() {
         val totalSecs = (minutesCount * 60 * 1000) + secondsCount * 1000
-        timer = object: CountDownTimer(totalSecs.toLong(), 1000){
+        timer = object : CountDownTimer(totalSecs.toLong(), 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                _minutesRemaining.value = (millisUntilFinished/(60 * 1000)).toInt()
-                _secondsRemaining.value = ((millisUntilFinished%(60 * 1000))/1000).toInt()
-                Log.i("Tick:"," ${_minutesRemaining.value} : ${_secondsRemaining.value}")
+                _minutesRemaining.value = (millisUntilFinished / (60 * 1000)).toInt()
+                _secondsRemaining.value = ((millisUntilFinished % (60 * 1000)) / 1000).toInt()
+                Log.i("Tick:", " ${_minutesRemaining.value} : ${_secondsRemaining.value}")
             }
 
             override fun onFinish() {
@@ -94,15 +109,15 @@ class MainViewModel: ViewModel() {
     }
 
     fun stopTimer() {
-        if(this::timer.isInitialized) timer.cancel()
+        if (this::timer.isInitialized) timer.cancel()
         _minutesRemaining.value = 0
         _secondsRemaining.value = 0
         _hasTimerStarted.value = false
     }
 
     fun onBackPressed(): Boolean {
-        val timerRunning: Boolean = if(_hasTimerStarted.value != null) _hasTimerStarted.value!! else false
-        return if(timerRunning) {
+        val timerRunning: Boolean = if (_hasTimerStarted.value != null) _hasTimerStarted.value!! else false
+        return if (timerRunning) {
             stopTimer()
             false
         } else {
@@ -119,5 +134,5 @@ class MainViewModel: ViewModel() {
  * Ext function to return values padded with 0 if single digit number. [Can be improvised]
  */
 fun Int.toProperFormat(): String {
-    return if(this < 10) "0$this" else this.toString()
+    return if (this < 10) "0$this" else this.toString()
 }

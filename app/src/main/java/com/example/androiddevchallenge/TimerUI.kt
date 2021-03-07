@@ -1,13 +1,25 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,7 +72,7 @@ fun TimerUI(viewModel: MainViewModel) {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.Center
-        ){
+        ) {
             viewModel.minutesRemaining.observeAsState().value?.let {
                 Number(it, it.toProperFormat() != viewModel.timerMinutes.value)
             }
@@ -73,7 +85,7 @@ fun TimerUI(viewModel: MainViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-        ){
+        ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
@@ -81,7 +93,7 @@ fun TimerUI(viewModel: MainViewModel) {
                     .rotate(180f)
                     .alpha(0.25f)
                     .padding(top = 48.dp, bottom = 24.dp)
-                    .graphicsLayer(rotationY = 180f) //to flip horizontally
+                    .graphicsLayer(rotationY = 180f) // to flip horizontally
             ) {
                 viewModel.minutesRemaining.observeAsState().value?.let {
                     Number(it, it.toProperFormat() != viewModel.timerMinutes.value)
@@ -103,7 +115,8 @@ fun TimerUI(viewModel: MainViewModel) {
                                 almostBlack
                             )
                         )
-                    )) {}
+                    )
+            ) {}
         }
         Box(
             modifier = Modifier
@@ -122,13 +135,13 @@ fun TimerUI(viewModel: MainViewModel) {
  * @param shouldAnimate - tells whether to animate showing this number. This will be false for very first value
  */
 @Composable
-fun Number(number: Int, shouldAnimate: Boolean){
+fun Number(number: Int, shouldAnimate: Boolean) {
     val numRotation = remember { Animatable(0f) }
     var numText by remember { mutableStateOf(number.toString()) }
 
-    if(shouldAnimate) {
+    if (shouldAnimate) {
         LaunchedEffect(number) {
-            numText = (if(number == 59) 0 else (number+1)).toProperFormat()
+            numText = (if (number == 59) 0 else (number + 1)).toProperFormat()
             numRotation.animateTo(0f, animationSpec = snap())
             numRotation.animateTo(-90f, animationSpec = tween(200, easing = LinearEasing))
             numText = (number).toProperFormat()
@@ -155,7 +168,7 @@ fun Number(number: Int, shouldAnimate: Boolean){
 }
 
 @Composable
-fun StopButton(onStop:() -> Unit){
+fun StopButton(onStop: () -> Unit) {
     Button(
         onClick = { onStop() },
         shape = RoundedCornerShape(50),
@@ -175,4 +188,3 @@ fun StopButton(onStop:() -> Unit){
         )
     }
 }
-

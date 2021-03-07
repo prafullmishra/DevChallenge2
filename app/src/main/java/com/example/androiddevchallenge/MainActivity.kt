@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
                 MyApp(
                     viewModel = viewModel,
                     hasTimerStarted = hasTimerStarted,
-                    onBackPressed = { onBackPressed() })
+                    onBackPressed = { onBackPressed() }
+                )
             }
         }
     }
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
      * Not the best way to handle navigation :)
      */
     override fun onBackPressed() {
-        if(viewModel.onBackPressed()) {
+        if (viewModel.onBackPressed()) {
             super.onBackPressed()
         }
     }
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
 @ExperimentalAnimationApi
 @Composable
-fun MyApp(viewModel: MainViewModel, hasTimerStarted: Boolean, onBackPressed:() -> Unit) {
+fun MyApp(viewModel: MainViewModel, hasTimerStarted: Boolean, onBackPressed: () -> Unit) {
     when {
         hasTimerStarted -> TimerUI(viewModel = viewModel)
         else -> InputTime(viewModel = viewModel)
